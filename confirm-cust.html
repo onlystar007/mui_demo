@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<!--<a class="mui-icon mui-icon-search mui-pull-right"></a>-->
+			<div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" id="false">
+				确认池
+			</a>
+				<a class="mui-control-item" id="true">
+				已认领
+			</a>
+
+			</div>
+
+		</header>
+
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="mui-control-content mui-active mui-scroll">
+					<ul id="confirmcontent"  class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+						</ul>
+					<!--<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/custorm.png" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<h4 class="oa-contact-name">资阳市国土资源局</h4>
+
+										</div>
+										<p class="oa-contact-email mui-h6">
+											<i class="mui-icon mui-icon-location-filled"></i>资阳市雁江区234号
+										</p>
+										<p class="oa-contact-email mui-h6">
+											<i class="mui-icon mui-icon-star-filled"></i>
+											<i class="mui-icon mui-icon-star-filled"></i>
+											<i class="mui-icon mui-icon-star-filled"></i>
+										</p>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>-->
+
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+		<script type="text/javascript" src="js/getdata.js"></script>
+
+		<script>
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				}
+			});
+			mui.plusReady(function() {
+				confirmpage=1;
+				getdata(true)
+					//map_makepoint()
+			})
+
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				getdata(true,function(){
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				})
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				var isend = false;
+				confirmpage = confirmpage + 1
+				if (confirmpage <= confirmpagecount) {
+					getdata(false)
+				} else {
+					isend = true
+				}
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(isend); //参数为true代表没有更多数据了。
+			}
+
+			mui(".mui-table-view").on('tap', '.mui-table-view-cell', function() {
+				plus.storage.setItem("confirmid",this.id);
+				plus.storage.setItem("confirmname",this.title);
+				plus.storage.setItem("confirmuserid",this.getAttribute("userid"));
+				mui.openWindow({
+					url:"confirm-cust-info.html",
+					id:"confirm-cust-info.html"
+				})
+			})
+
+			//添加自定义事件监听
+			window.addEventListener('show', function(event) {
+				//获得事件参数
+				//alert("show-cust");
+			});
+
+			var issure = false;
+			mui(".mui-segmented-control").on("tap", ".mui-control-item", function() {
+				issure = JSON.parse(this.id);
+				getdata(true)
+			})
+			var confirmpage = 1,
+				confirmpagecount = 0;
+
+			function getdata(refresh,callback) {
+				var content = document.getElementById("confirmcontent");
+				zydx.confirmlist(confirmpage, issure, function(data) {
+					confirmpagecount = Math.ceil(data.Count / data.PageSize);
+					if(callback != undefined) {
+						callback(data);
+					}
+
+					if (refresh) {
+						content.innerHTML = "";
+					}
+					if (data.List == null || data.List.length == 0) {
+						content.innerHTML = "<p class='nocontent'>暂无内容</p>";
+						return;
+					}
+					
+					for (var i = 0; i < data.List.Obj.length; i++) {
+
+						
+						var html = '<li class="mui-table-view-cell" title="'+
+						data.List.Obj[i].custname+'" userid="'+data.List.Obj[i].user_id+'" id="' + data.List.Obj[i].id + '"><div class="mui-slider-cell"><div class="oa-contact-cell mui-table"><div class="oa-contact-avatar mui-table-cell"><img src="images/custorm.png" /></div><div class="oa-contact-content mui-table-cell"><div class="mui-clearfix"><h4 class="oa-contact-name">' +
+							data.List.Obj[i].custname + '</h4></div><p class="oa-contact-email mui-h6"><i class="mui-icon mui-icon-location-filled"></i>' +
+							data.List.Obj[i].address_detail + '</p>' +
+							'</div></div></div></li>';
+						content.innerHTML += html;
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

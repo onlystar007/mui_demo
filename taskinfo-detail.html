@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/getdata.js"></script>
+		<div class="mui-content">
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+
+					<p class="oa-contact-name mui-h4">
+						名称
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="name">
+						-
+					</p>
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						积分
+					</p>
+					<p class="oa-contact-name mui-h5" id="score">
+						-
+					</p>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right custinfo" id="custid">
+						<p class="oa-contact-name mui-h4">
+							客户单位
+						</p>
+
+						<p class="oa-contact-name mui-h5" id="custname">
+							-
+						</p>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						指派人
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="zhipai">
+						-
+					</p>
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						截止时间
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="endtime">
+						-
+					</p>
+				</li>
+
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						内容
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="summary">
+						-
+					</p>
+				</li>
+			</ul>
+			<nav class="mui-bar mui-bar-tab">
+				<div class="mui-tab-item" id="gettask" style="display: none;">
+					<span class="mui-icon mui-icon-flag"></span>
+					<span class="mui-tab-label">接受任务</span>
+				</div>
+				<div class="mui-tab-item" id="posttask" style="display: none;">
+					<span class="mui-icon mui-icon-person"></span>
+					<span class="mui-tab-label">提交报告</span>
+				</div>
+				<div class="mui-tab-item" id="postover" style="display: none;">
+					<span class="mui-icon mui-icon-person"></span>
+					<span class="mui-tab-label">任务已结束</span>
+				</div>
+			</nav>
+		</div>
+		<script type="text/javascript">
+			mui.init({
+				
+			})
+			var gettask = document.getElementById("gettask");
+			var posttask = document.getElementById("posttask");
+			var postover = document.getElementById("postover");
+			var taskid;
+			
+			mui.plusReady(function() {
+				taskid = plus.storage.getItem("taskid");
+				//alert(taskid)
+				getdata();
+				
+				mui(".mui-table-view").on("tap", ".custinfo", function() {
+					mui.openWindow({
+						id: 'custinfo-main.html',
+						url: 'custinfo-main.html',
+					});
+
+				})
+				
+				mui(".mui-bar-tab").on("tap", ".mui-tab-item", function() {
+					var id=this.id;
+					
+					switch(id)
+					{
+						case "gettask":
+						accept(2)
+						break;
+						case "posttask":
+						accept(6)
+						break;
+					}
+
+				})
+			})
+
+			function accept(state) {
+				var model = {};
+				model.taskid = plus.storage.getItem("taskid");
+				model.state = state;
+				zydx.accepttask(model, function() {
+					getdata();
+					//plus.webview.getWebviewById("tab-webview-subpage-task.html").evalJS("getdata(true)")
+					console.log("6")
+					plus.webview.currentWebview().opener().evalJS("getdata(true)")
+				})
+
+			}
+
+			function getdata() {
+				zydx.taskinfo(taskid, function(data) {
+					plus.storage.setItem("custid", data.custs.custid);
+					console.log(JSON.stringify(data));
+					document.getElementById("name").innerHTML = data.name
+					document.getElementById("score").innerHTML = data.score + "分"
+					document.getElementById("custname").innerHTML = data.custs.custname
+					document.getElementById("zhipai").innerHTML = data.creatname
+					document.getElementById("endtime").innerHTML = data.enddate
+					document.getElementById("summary").innerHTML = data.summary
+					gettask.style.display = "none";
+					posttask.style.display = "none";
+					postover.style.display = "none";
+					switch (data.state) {
+						case 0: //任务待接受
+							gettask.style.display = "";
+							break;
+						case 2: //提交报告
+							posttask.style.display = "";
+							break;
+						default:
+							postover.style.display = "";
+							break;
+					}
+				})
+			}
+		</script>
+	</body>
+
+</html>

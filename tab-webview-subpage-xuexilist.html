@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="/css/app.css"/>-->
+		<style>
+			/*.mui-card .mui-control-content {
+				padding: 10px;
+			}*/
+			
+			.mui-control-content {
+				height: 450px;
+			}
+			
+			.mui-scroll-wrapper {
+				/*position:initial;*/
+			}
+			.xuexi-warining{
+				margin-left: 15px;
+				font-size: small;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div>
+				<div id="segmentedControl" class="mui-segmented-control">
+					<a class="mui-control-item mui-active" listtype="1" href="#item1">
+						作业
+
+					</a>
+					<a class="mui-control-item" listtype="2" href="#item1">
+						讲义
+					</a>
+
+				</div>
+			</div>
+			<div>
+				<div id="item1" class="mui-control-content mui-active">
+					<div id="scroll" class="mui-scroll-wrapper">
+						<div class="mui-scroll">
+							<ul id="list1" class="mui-table-view mui-table-view-chevron">
+								<li class="mui-table-view-cell">
+									<div class="mui-slider-cell">
+										<div class="oa-contact-cell mui-table">
+											<div class="oa-contact-avatar mui-table-cell">
+												<img src="images/visitor.png" />
+											</div>
+											<div class="oa-contact-content mui-table-cell">
+												<div class="mui-clearfix">
+													<span class="mui-badge">11-11</span>
+													<span   class="mui-badge-red xuexi-warining">未读</span>
+												</div>
+
+												<p class="mui-ellipsis">
+													钢琴：第一课《认识钢琴》
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</li>
+								<li class="mui-table-view-cell">
+									<div class="mui-slider-cell">
+										<div class="oa-contact-cell mui-table">
+											<div class="oa-contact-avatar mui-table-cell">
+												<img src="images/visitor.png" />
+											</div>
+											<div class="oa-contact-content mui-table-cell">
+												<div class="mui-clearfix">
+													<span class="mui-badge">11-11</span>
+													<span class="mui-badge-red xuexi-warining">未读</span>
+												</div>
+
+												<p class="mui-ellipsis">
+													钢琴：第一课《认识钢琴》
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="mui-table-view-cell">
+									<div class="mui-slider-cell">
+										<div class="oa-contact-cell mui-table">
+											<div class="oa-contact-avatar mui-table-cell">
+												<img src="images/visitor.png" />
+											</div>
+											<div class="oa-contact-content mui-table-cell">
+												<div class="mui-clearfix">
+													<span class="mui-badge">11-11</span>
+													<span class="mui-badge-red xuexi-warining">未读</span>
+												</div>
+
+												<p class="mui-ellipsis">
+													钢琴：第一课《认识钢琴》
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="mui-table-view-cell">
+									<div class="mui-slider-cell">
+										<div class="oa-contact-cell mui-table">
+											<div class="oa-contact-avatar mui-table-cell">
+												<img src="images/visitor.png" />
+											</div>
+											<div class="oa-contact-content mui-table-cell">
+												<div class="mui-clearfix">
+													<span class="mui-badge">11-11</span>
+													<span class="mui-badge-red xuexi-warining">未读</span>
+												</div>
+
+												<p class="mui-ellipsis">
+													钢琴：第一课《认识钢琴》
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="mui-table-view-cell">
+									<div class="mui-slider-cell">
+										<div class="oa-contact-cell mui-table">
+											<div class="oa-contact-avatar mui-table-cell">
+												<img src="images/visitor.png" />
+											</div>
+											<div class="oa-contact-content mui-table-cell">
+												<div class="mui-clearfix">
+													<span class="mui-badge">11-11</span>
+													<span class="mui-badge-red xuexi-warining">未读</span>
+												</div>
+
+												<p class="mui-ellipsis">
+													钢琴：第一课《认识钢琴》
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</li>
+
+								<li class="mui-table-view-cell">
+									<div class="mui-slider-cell">
+										<div class="oa-contact-cell mui-table">
+											<div class="oa-contact-avatar mui-table-cell">
+												<img src="images/visitor.png" />
+											</div>
+											<div class="oa-contact-content mui-table-cell">
+												<div class="mui-clearfix">
+													<span class="mui-badge">11-11</span>
+													<span class="mui-badge-red xuexi-warining">未读</span>
+												</div> 
+
+												<p class="mui-ellipsis">
+													钢琴：第一课《认识钢琴》
+												</p>
+
+											</div>
+										</div>
+									</div>
+								</li>
+
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			//console.log("init")
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+				pullRefresh: {
+					container: "#scroll", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						height: 50, //可选,默认50.触发下拉刷新拖动距离,
+						auto: true, //可选,默认false.自动下拉刷新一次
+						contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pulldownRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+
+					},
+					up: {
+						height: 50, //可选.默认50.触发上拉加载拖动距离
+						auto: true, //可选,默认false.自动上拉加载一次
+						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+						callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					}
+				}
+
+			});
+
+			(function($) {
+				$('#scroll').scroll({
+					indicators: true //是否显示滚动条
+				});
+				var segmentedControl = document.getElementById('segmentedControl');
+			})(mui);
+
+			listtype = "1"
+			mui("#segmentedControl").on('tap', '.mui-control-item', function() {
+				//获取id
+				var currentlisttype = this.getAttribute("listtype");
+				listtype = currentlisttype
+				getdata(true)
+
+			})
+
+			function pulldownRefresh() {
+				console.log("pulldownRefresh")
+				taskpage = 1
+				getdata(true, function() {
+						mui('#scroll').pullRefresh().endPulldownToRefresh(); //refresh completed
+					})
+					//mui('#pullrefresh').pullRefresh().refresh(true);
+
+			}
+			count = 0
+
+			function pullupRefresh() {
+				var isend = false;
+				var self = this;
+				var ul = self.element.querySelector('.mui-table-view');
+				console.log("pullupRefresh")
+
+				taskpage = taskpage + 1
+				getdata(false)
+					//				if(taskpage <= taskpagecount) {
+					//					getdata(false)
+					//				} else {
+					//					isend = true
+					//				}
+				if(count > 120)
+					isend = true
+
+				mui('#scroll').pullRefresh().endPullupToRefresh(isend); //参数为true代表没有更多数据了。
+
+			}
+
+			function getdata(refresh, callback) {
+								var table = document.getElementById("list1")
+								imgstr=''
+								table.innerHTML = ''
+								sss = ''
+								if(listtype=='1')
+								{
+									sss='作业'
+									imgstr='<img src="images/visitor.png" />'
+								}
+								
+								else
+								{
+									sss='讲义'
+									imgstr='<img src="images/task.png" />'
+								}
+								
+								for(var i = 0; i < 40; i++) {
+									isread = ''
+									if (i%2==0){
+										isread='<span class="mui-badge-gray xuexi-warining">已读</span>'
+									}
+									else
+										isread='<span class="mui-badge-red xuexi-warining">未读</span>'
+									
+									var li = document.createElement('li');
+									li.className = 'mui-table-view-cell';
+									li.setAttribute('id', i);
+									li.innerHTML = '<div class="mui-slider-cell">'+
+									'<div class="oa-contact-cell mui-table"><div class="oa-contact-avatar mui-table-cell">'+
+									imgstr+'</div>'+
+									'<div class="oa-contact-content mui-table-cell">'+
+									'<div class="mui-clearfix"><span class="mui-badge">11-11</span>'+
+									isread+'</div><p class="mui-ellipsis">'+
+									'钢琴'+sss+'：第一课《认识钢琴》</p></div></div></div>'
+									table.appendChild(li);
+									count++;
+				
+								}
+
+				if(callback != undefined)
+					callback()
+
+			}
+		</script>
+
+	</body>
+
+</html>

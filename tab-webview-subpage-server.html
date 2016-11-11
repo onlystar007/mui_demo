@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<!--<link rel="stylesheet" type="text/css" href="../css/app.css"/>-->
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<ul class="mui-table-view mui-grid-view mui-grid-9">
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a id="server_1" href="#">
+						<span class="mui-icon mui-icon-chatboxes"></span>
+						<div class="mui-media-body">选课报班</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a id="server_10" href="#">
+						<span class="mui-icon mui-icon-email"></span>
+						<div class="mui-media-body">请假</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<!--<span class="mui-icon mui-icon-refresh"><span class="mui-badge">5</span></span>-->
+						<span class="mui-icon mui-icon-refresh"></span>
+						<div class="mui-media-body">续报</div>
+					</a>
+				</li>
+				
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a  id="server_4" href="#">
+						<span class="mui-icon mui-icon-location"></span>
+						<div class="mui-media-body">待缴费</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-redo"></span>
+						<div class="mui-media-body">调课</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-undo"></span>
+						<div class="mui-media-body">转班</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a href="#">
+						<span class="mui-icon mui-icon-search"></span>
+						<div class="mui-media-body">进度查询</div>
+					</a>
+				</li>
+				
+				<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a id="server_9" href="#">
+						<span class="mui-icon mui-icon-more"></span>
+						<div class="mui-media-body">服务中心</div>
+					</a>
+				</li>
+			
+				
+					<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+					<a id="server_11" href="#">
+						<span class="mui-icon mui-icon-compose"></span>
+						<div class="mui-media-body">评论老师</div>
+					</a>
+				</li>
+				
+			</ul>
+		</div>
+	</body>
+	<script src="js/mui.min.js"></script>
+	<script>
+		mui.init({
+			swipeBack: true //启用右滑关闭功能
+		});
+		mui(".mui-content").on('tap', '#server_1', function() {
+			//mui('.mui-popover').popover('toggle');
+			var pageview = plus.webview.create('common-header.html', 'common-header.html', {})
+			pageview.addEventListener('loaded', function() {
+				pageview.show('slide-in-right', 200, function() {
+					//webview.evalJS("test()");
+					mui.fire(pageview, 'opensub', {
+						subpage: "server_1.html",
+						header: {
+							title: "选课报班"
+//							right: {
+//								icon: "mui-btn mui-btn-blue mui-btn-link",
+//								text: "提交",
+//							}
+						}
+					});
+				});
+			})
+		})
+		mui(".mui-content").on('tap', '#server_4', function() {
+			//mui('.mui-popover').popover('toggle');
+			plus.webview.open("pay.html", "pay", {});
+		})
+		
+		
+		mui(".mui-content").on('tap', '#server_9', function() {
+			//mui('.mui-popover').popover('toggle');
+			plus.webview.open("mapcenter.html", "pay", {});
+		})
+		
+		mui(".mui-content").on('tap', '#server_10', function() {
+			//mui('.mui-popover').popover('toggle');
+			plus.webview.open("qingjia.html", "pay", {});
+		})
+		
+		mui(".mui-content").on('tap', '#server_11', function() {
+			//mui('.mui-popover').popover('toggle');
+			plus.webview.open("pinlun.html", "pay", {});
+		})
+		
+	
+	</script>
+
+</html>

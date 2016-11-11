@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav" id="tab-webview-subpage-server.html">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">选课</h1>
+
+		</header>
+		<div class="mui-content">
+			<ul class="kecheng">
+				<li>
+					<div class="header">
+						<img width="40" height="40" src="images/avtar.jpg" />
+						<h3>邵辉</h3>
+						<div class="price">￥500</div>
+					</div>
+					<div class="title">
+						短期班钢琴培训
+					</div>
+					<div class="time">
+						<i class="mui-icon mui-icon-info"></i> 2016-11-01至2017-01-01 每天18-22点
+					</div>
+					<div class="address"><i class="mui-icon mui-icon-location"></i>人民南路36号</div>
+					<div class="footer">
+						<span>剩余30名</span>
+						<button type="button" class="mui-btn mui-btn-primary">报名</button>
+					</div>
+				</li>
+				<li>
+					<div class="header">
+						<img width="40" height="40" src="images/avtar.jpg" />
+						<h3>邵辉</h3>
+						<div class="price">￥500</div>
+					</div>
+					<div class="title">
+						短期班钢琴培训
+					</div>
+					<div class="time">
+						2016-11-01至2017-01-01 每天18-22点
+					</div>
+					<div class="address">人民南路36号</div>
+					<div class="footer">
+						<span>剩余30名</span>
+						<button type="button" class="mui-btn mui-btn-primary">报名</button>
+					</div>
+				</li>
+				<li id="go2pay" style="display: none;">
+					<div class="mui-button-row">
+						<button id="btn_go2pay" type="button" class="mui-btn mui-btn-danger">待付费<span id="nopay_count" class="mui-badge mui-badge-danger">0</span></button>
+					</div>
+				</li>
+
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			mui.plusReady(function() {
+				// 在这里调用plus api
+
+				mui(".footer").on('tap', '.mui-btn-primary', function() {
+
+					mui.alert('报名成功', '报名', function() {
+
+						document.getElementById("go2pay").style.display = ''
+						document.getElementById("nopay_count").innerText = parseInt(document.getElementById("nopay_count").innerText) + 1
+
+					});
+				});
+
+				mui(".mui-content").on('tap', '#btn_go2pay', function() {
+					plus.webview.open("pay.html", "pay", {});
+				})
+			});
+		</script>
+
+	</body>
+
+</html>

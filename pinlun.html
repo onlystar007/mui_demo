@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav" id="tab-webview-subpage-server.html">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">评论</h1>
+
+		</header>
+		<div class="mui-content">
+			<ul class="kecheng">
+				<li>
+					<div class="header">
+						<img width="40" height="40" src="images/avtar.jpg" />
+						<h3>邵辉</h3>
+						
+					</div>
+					<div class="title">
+						短期班钢琴培训
+					</div>
+					<div class="footer">
+						<button type="button" class="mui-btn mui-btn-primary">评价</button>
+					</div>
+				</li>
+				<li>
+					<div class="header">
+						<img width="40" height="40" src="images/avtar.jpg" />
+						<h3>邵辉</h3>
+						
+					</div>
+					<div class="title">
+						短期班钢琴培训
+					</div>
+					
+					<div class="footer">
+						
+						<button type="button" class="mui-btn mui-btn-primary">评价</button>
+					</div>
+				</li>
+	
+
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+
+			mui.plusReady(function() {
+				// 在这里调用plus api
+
+				mui(".footer").on('tap', '.mui-btn-primary', function() {
+
+					mui.prompt("请输入评语！","","评价",["提交","取消"],function(m){
+						if(m.index==0)
+						{
+							mui.alert(m.value,"评价成功")
+						}
+					})
+				});
+
+				mui(".mui-content").on('tap', '#btn_go2pay', function() {
+					plus.webview.open("pay.html", "pay", {});
+				})
+			});
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				subpages: [{
+					url: 'custinfo.html',
+					id: 'custinfo.html',
+					styles: {
+						top: '45px', //mui标题栏默认高度为45px；
+						bottom: '51px' //默认为0px，可不定义；
+					}
+				}],
+				preloadPages: [{
+					id: 'common-header.html',
+					url: 'common-header.html'
+				}, {
+					id: "custinfo-task-list.html",
+					url: "custinfo-task-list.html",
+				}]
+			})
+			mui.plusReady(function() {
+
+					var common_header = null;
+
+					mui(".mui-bar").on('tap', '#addcontact', function() {
+
+						//
+						plus.storage.setItem("ganxirenid", "0");
+						var pageview = plus.webview.create('common-header.html', 'common-header.html', {})
+						pageview.addEventListener('loaded', function() {
+								pageview.show('pop-in', 200, function() {
+									mui.fire(pageview, 'opensub', {
+										id: null,
+										subpage: "custinfo-contact-add.html",
+										bartab: {},
+										header: {
+											title: "新建干系人",
+											right: {
+												icon: "mui-btn mui-btn-blue mui-btn-link",
+												text: "提交",
+											}
+										}
+									});
+								});
+							})
+							//
+
+					})
+					mui(".mui-bar-tab").on("tap", ".mui-tab-item", function() {
+						var newpage = null;
+						var url = this.href;
+//						newpage = plus.webview.getWebviewById(this.id);
+//
+//						mui.fire(newpage, 'newcustid', {
+//							custid: "custid123456456",
+//						});
+						mui.openWindow({
+							id: url,
+							url: url
+						});
+					})
+
+				})
+		</script>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<a class="mui-icon mui-icon-plusempty mui-pull-right" id="addcontact"></a>
+
+			<h1 class="mui-title">客户单位详情</h1>
+		</header>
+		<nav class="mui-bar mui-bar-tab">
+			<a class="mui-tab-item" href="custinfo-charge-list.html" id="custinfo-charge-list.html">
+				<span class="mui-icon mui-icon-flag"></span>
+				<span class="mui-tab-label">收入</span>
+			</a>
+			<a class="mui-tab-item" href="custinfo-xieyi-list.html" id="custinfo-xieyi-list.html">
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">协议</span>
+			</a>
+			<a id="visitortab" class="mui-tab-item" href="custinfo-task-list.html" id="custinfo-task-list.html">
+				<span class="mui-icon mui-icon-compose"></span>
+				<span class="mui-tab-label">拜访</span>
+			</a>
+			<a class="mui-tab-item" href="custinfo-map.html" id="custinfo-map.html">
+				<span class="mui-icon mui-icon-map"></span>
+				<span class="mui-tab-label">定位</span>
+			</a>
+
+		</nav>
+		
+	</body>
+
+</html>

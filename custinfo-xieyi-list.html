@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css" />
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" id="4">
+				进行中
+			</a>
+				<a class="mui-control-item" id="1">
+				已完成
+			</a>
+
+			</div>
+
+		</header>
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div id="xieyicontent" class="mui-control-content mui-active ">
+					
+				</div>
+				<!--<div id="item2" class="mui-control-content">
+				<ul class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+
+					<li class="mui-table-view-cell">
+						<div class="mui-slider-cell">
+							<div class="oa-contact-cell mui-table">
+
+								<div class="oa-contact-content mui-table-cell">
+									<div class="mui-clearfix">
+										<h4 class="oa-contact-name">XXXXXX协议</h4>
+										
+									</div>
+
+									<p class="oa-contact-name mui-h6">
+										截止:2015-6-30
+									</p>
+									<p class="oa-contact-email mui-h6">
+										状态:已结束
+									</p>
+									<p class="oa-contact-email mui-h6">
+										客户:资阳市国土局
+									</p>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-slider-cell">
+							<div class="oa-contact-cell mui-table">
+
+								<div class="oa-contact-content mui-table-cell">
+									<div class="mui-clearfix">
+										<h4 class="oa-contact-name">XXXXXX协议</h4>
+										
+									</div>
+
+									<p class="oa-contact-name mui-h6">
+										截止:2015-6-30
+									</p>
+									<p class="oa-contact-email mui-h6">
+										状态:已结束
+									</p>
+									<p class="oa-contact-email mui-h6">
+										客户:资阳市国土局
+									</p>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+
+			</div>-->
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/getdata.js"></script>
+		<script>
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+										up: {
+											contentrefresh: '正在加载...',
+											callback: pullupRefresh
+										}
+				}
+			});
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				getdata(true,function(){
+					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+				})
+				
+			}
+
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(true); //参数为true代表没有更多数据了。
+			}
+
+			mui.plusReady(function() {
+				getdata(true)
+			})
+
+			var state = 4
+			mui(".mui-segmented-control").on("tap",".mui-control-item",function(){
+				state=this.id;
+				getdata(true)
+			})
+			function getdata(refresh,callback) {
+				var custid = plus.storage.getItem("custid");
+				var content=document.getElementById("xieyicontent");
+				zydx.xieyilist(custid, state, function(data) {
+					if(callback != undefined) {
+						callback(data);
+					}
+//					mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					if(refresh)
+					{
+						content.innerHTML="";
+					}
+					if (data.List == null || data.List.length == 0) {
+						content.innerHTML="<p class='nocontent'>暂无内容</p>";
+						return;
+					}
+					var innerHTML='<ul  class="mui-table-view mui-table-view-striped mui-table-view-condensed">';
+					for(var i=0;i<data.List.length;i++)
+					{
+						var img='';
+						var statetxt="";
+						switch(data.List[i].StatusType)
+						{
+							case 1://过期
+							statetxt="已结束"
+							break;
+							case 2://预警
+							statetxt='<span class="state-doing"> 预警</span>';
+							img='<div class="oa-contact-avatar mui-table-cell"><img src="images/xieyi-warning.png" /></div>';
+							break;
+							case 3://正常
+							statetxt='正常'
+							img='<div class="oa-contact-avatar mui-table-cell"><img src="images/xieyi-normal.png" /></div>'
+							break;
+						}
+						var html='<li class="mui-table-view-cell"><div class="mui-slider-handle"><div class="mui-slider-cell"><div class="oa-contact-cell mui-table">'+
+						img+'<div class="oa-contact-content mui-table-cell"><div class="mui-clearfix"><h4 class="oa-contact-name">'+
+						data.List[i].name+'</h4></div><p class="oa-contact-email mui-h6">起始:'+
+						data.List[i].eff_date.split(' ')[0]+'</p><p class="oa-contact-email mui-h6">截止:'+
+						data.List[i].exp_date.split(' ')[0]+'</p><br/><p class="oa-contact-email mui-h6">状态:'+
+						statetxt+'</p><p class="oa-contact-email mui-h6">协议金额:￥'+
+						data.List[i].amount+'</p><p class="oa-contact-content mui-h6">客户:'+
+						data.List[i].custname+'</p></div></div></div></div></li>';
+						innerHTML+=html;
+					}
+					innerHTML+='</ul>'
+					content.innerHTML=innerHTML;
+					
+				})
+			}
+		</script>
+	</body>
+
+</html>

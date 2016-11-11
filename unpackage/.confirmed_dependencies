@@ -1,0 +1,270 @@
+{
+  "login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "js/mui.enterfocus.js",
+      "images/login_bg.jpg"
+    ],
+    "refer": [
+      "tab-webview-main.html"
+    ]
+  },
+  "tab-webview-subpage-myinfo.html": {
+    "resources": [
+      "images/avtar.jpg",
+      "js/app.js",
+      "fonts/mui.ttf",
+      "css/style.css"
+    ],
+    "refer": [
+      "confirm-cust.html"
+    ]
+  },
+  "tab-webview-subpage-about.html": {
+    "resources": [
+      "images/i_index_nav_2.png",
+      "images/i_index_nav_1.png",
+      "images/i_index_nav_4.png",
+      "js/echarts.common.min.js",
+      "images/xieyi-warning.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "fonts/mui.ttf",
+      "images/visitor.png"
+    ],
+    "refer": [
+      "taskinfo-detail-main.html"
+    ]
+  },
+  "tab-webview-main.html": {
+    "resources": [
+      "tab-webview-subpage-about.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/getdata.js",
+      "css/style.css"
+    ],
+    "refer": [
+      "tab-webview-subpage-myinfo.html",
+      "tab-webview-subpage-about.html",
+      "tab-webview-subpage-task.html",
+      "tab-webview-subpage-cust.html",
+      "custinfo-main.html",
+      "task-choose-cust.html"
+    ]
+  },
+  "tab-webview-subpage-task.html": {
+    "resources": [
+      "images/task.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "images/visitor.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "common-header.html",
+      "taskinfo-detail-main.html"
+    ]
+  },
+  "tab-webview-subpage-cust.html": {
+    "resources": [
+      "js/map.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "images/custorm.png",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "custinfo-main.html",
+      "task-choose-cust.html"
+    ]
+  },
+  "common-header.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/mui.min.js",
+      "taskinfo_add.html",
+      "css/mui.min.css",
+      "css/style.css",
+      "custinfo-contact-add.html",
+      "visitinfo_add.html"
+    ],
+    "refer": [
+      "custinfo-contact-add.html",
+      "taskinfo_add.html",
+      "visitinfo_add.html"
+    ]
+  },
+  "taskinfo-detail-main.html": {
+    "resources": [
+      "taskinfo-detail.html",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "taskinfo-detail.html"
+    ]
+  },
+  "custinfo-main.html": {
+    "resources": [
+      "custinfo.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "custinfo.html",
+      "custinfo-map.html",
+      "custinfo-task-list.html",
+      "common-header.html",
+      "custinfo-charge-list.html",
+      "custinfo-xieyi-list.html"
+    ]
+  },
+  "confirm-cust.html": {
+    "resources": [
+      "js/jquery-2.1.0.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "images/custorm.png"
+    ],
+    "refer": [
+      "confirm-cust-info.html"
+    ]
+  },
+  "taskinfo-detail.html": {
+    "resources": [
+      "fonts/mui.ttf",
+      "js/getdata.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css"
+    ],
+    "refer": [
+      "custinfo-main.html"
+    ]
+  },
+  "custinfo-map.html": {
+    "resources": [
+      "images/map-marker-bubble-azure.png",
+      "js/map.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "custinfo-task-list.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js"
+    ],
+    "refer": [
+      "common-header.html"
+    ]
+  },
+  "custinfo.html": {
+    "refer": [
+      "custinfo-map.html",
+      "common-header.html"
+    ],
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js"
+    ]
+  },
+  "taskinfo_add.html": {
+    "resources": [
+      "js/mui.picker.min.js",
+      "css/mui.picker.min.css",
+      "js/getdata.js"
+    ],
+    "refer": [
+      "task-choose-zhipairen.html",
+      "task-choose-cust.html"
+    ]
+  },
+  "custinfo-contact-add.html": {
+    "resources": [
+      "js/getdata.js"
+    ],
+    "refer": []
+  },
+  "task-choose-cust.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js"
+    ],
+    "refer": []
+  },
+  "custinfo-xieyi-list.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "images/xieyi-normal.png"
+    ],
+    "refer": []
+  },
+  "custinfo-charge-list.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js",
+      "images/task.png"
+    ],
+    "refer": []
+  },
+  "confirm-cust-info.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/getdata.js"
+    ],
+    "refer": [
+      "task-choose-cust.html"
+    ]
+  },
+  "visitinfo_add.html": {
+    "resources": [
+      "js/mui.picker.min.js",
+      "css/mui.picker.min.css",
+      "js/getdata.js"
+    ],
+    "refer": []
+  }
+}

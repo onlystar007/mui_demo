@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" href="css/style.css" />
+
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-plusempty mui-pull-right" href="#popover"></a>
+			<div id="segmentedControl" class="mui-segmented-control">
+				<a class="mui-control-item mui-active" tasktype="1">
+				任务
+			</a>
+				<a class="mui-control-item" tasktype="2">
+				拜访
+			</a>
+
+			</div>
+
+		</header>-->
+		<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+			<div class="mui-scroll">
+				<div class="mui-control-content mui-active">
+					<ul id="task_ul" class="mui-table-view mui-table-view-striped mui-table-view-condensed">
+					</ul>
+
+				</div>
+			</div>
+		</div>
+		<div id="popover" class="mui-popover" style=" display: none;">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell" id="addtask"><a href="#">新建任务</a></li>
+				<li class="mui-table-view-cell" id="addvisit"><a href="#">新建拜访</a></li>
+			</ul>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/getdata.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				swipeBack: false,
+				pullRefresh: {
+					container: '#pullrefresh',
+					down: {
+						callback: pulldownRefresh
+					},
+					up: {
+						contentrefresh: '正在加载...',
+						callback: pullupRefresh
+					}
+				},
+				preloadPages: [{
+					id: 'taskinfo-detail-main.html',
+					url: "taskinfo-detail-main.html"
+				}]
+			});
+			
+			//新增任务或派单
+			function poper(){
+				var id="";
+				tasktype=parseInt(plus.storage.getItem("tasktype")) 
+				if(tasktype==1)
+				{
+					id="addtask"
+				}
+				else
+				{
+					id="addvisit"
+				}
+				var tab=document.getElementById(id);
+				mui.trigger(tab,'tap');
+			}
+			//切换标签
+			function tab(id) {
+				tasktype=id;
+				getdata(true);
+			}
+			/**
+			 * 下拉刷新具体业务实现
+			 */
+			function pulldownRefresh() {
+				taskpage = 1
+				getdata(true, function() {
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					})
+					//mui('#pullrefresh').pullRefresh().refresh(true);
+
+			}
+			var count = 0;
+			/**
+			 * 上拉加载具体业务实现
+			 */
+			function pullupRefresh() {
+				var isend = false;
+				taskpage = taskpage + 1
+				if (taskpage <= taskpagecount) {
+					getdata(false)
+				} else {
+					isend = true
+				}
+				mui('#pullrefresh').pullRefresh().endPullupToRefresh(isend); //参数为true代表没有更多数据了。
+
+			}
+
+			mui.plusReady(function() {
+				loadcreat(); //如何是客户经理则隐藏创建任务按钮
+				getdata(true);
+				var common_header = plus.webview.create('common-header.html', 'common-header.html', {});
+
+				//新增任务
+				mui(".mui-popover").on('tap', '#addtask', function() {
+						//mui('.mui-popover').popover('toggle');
+						var pageview = plus.webview.create('common-header.html', 'common-header.html', {})
+						pageview.addEventListener('loaded', function() {
+							pageview.show('slide-in-right', 200, function() {
+								//webview.evalJS("test()");
+								mui.fire(pageview, 'opensub', {
+									subpage: "taskinfo_add.html",
+									header: {
+										title: "新建任务",
+										right: {
+											icon: "mui-btn mui-btn-blue mui-btn-link",
+											text: "提交",
+										}
+									}
+								});
+							});
+						})
+					})
+					//新增拜访
+				mui(".mui-popover").on('tap', '#addvisit', function() {
+						//mui('.mui-popover').popover('toggle');
+						var pageview = plus.webview.create('common-header.html', 'common-header.html', {})
+						pageview.addEventListener('loaded', function() {
+							pageview.show('slide-in-right', 200, function() {
+								//webview.evalJS("test()");
+								mui.fire(pageview, 'opensub', {
+									subpage: "visitinfo_add.html",
+									header: {
+										title: "新建拜访",
+										right: {
+											icon: "mui-btn mui-btn-blue mui-btn-link",
+											text: "提交",
+										}
+									}
+								});
+							});
+						})
+					})
+					//打开任务详情页面
+
+				mui(".mui-control-content").on('tap', '.mui-table-view-cell', function() {
+					var task_id = this.getAttribute("id");
+					plus.storage.setItem("taskid", task_id);
+					var page = "taskinfo-detail-main.html";
+					var pageview = plus.webview.create(page, page, {})
+					pageview.addEventListener('loaded', function() {
+							pageview.show('slide-in-right', 200, function() {
+							});
+						})
+				})
+			})
+
+			var tasktype = 1;
+			var taskpage = 1;
+			var taskpagecount = 0;
+
+//			mui(".mui-bar-nav").on("tap", ".mui-control-item", function() {
+//				tasktype = parseInt(this.getAttribute("tasktype"))
+//				mui('#pullrefresh').pullRefresh().refresh(true);
+//				getdata(true);
+//			})
+
+			function getdata(refresh, callback) {
+				zydx.tasklist(taskpage, null, tasktype, function(data) {
+
+					taskpagecount = Math.ceil(data.Count / data.PageSize);
+					//taskpage = data.PageIndex
+					//taskdata = data.Obj.List
+					var table = document.getElementById("task_ul")
+					if (refresh) {
+						table.innerHTML = "";
+					}
+					if (data.List != null && data.List.Obj != undefined && data.List.Obj.length > 0) {
+						taskdata = data.List.Obj
+						if (tasktype == 1) {
+
+							for (var i = 0; i < taskdata.length; i++) {
+								var btnstr = ''
+
+								if (taskdata[i].status == 0) {
+									btnstr = '<a class="mui-btn mui-btn-yellow">接受</a></div>'
+								} else if (taskdata[i].status == 2) {
+									btnstr = '<a class="mui-btn mui-btn-red">提交</a></div>'
+								} else if (taskdata[i].status == 4) {
+									btnstr = '<a class="mui-btn mui-btn-blue">审核</a></div>'
+								}
+								var custName = ''
+								if (taskdata[i].cust != null && taskdata[i].cust.length > 0) {
+									custName = taskdata[i].custs[0].CUST_NAME
+								}
+
+								var li = document.createElement('li');
+								li.className = 'mui-table-view-cell';
+								li.setAttribute('id', taskdata[i].Id);
+								li.innerHTML = '<div class="mui-slider-right mui-disabled">' + btnstr +
+									'<div class="mui-slider-handle"><div class="mui-slider-cell"><div class="oa-contact-cell mui-table"><div class="oa-contact-avatar mui-table-cell">' +
+									'<img src="images/task.png" /></div><div class="oa-contact-content mui-table-cell"><div class="mui-clearfix">' +
+									'<h4 class="oa-contact-name">' + taskdata[i].name + '</h4>' +
+									'<span class="oa-contact-position mui-h6">' + taskdata[i].score + '分</span></div>' +
+									'<p class="oa-contact-email mui-h6">指派给:' + taskdata[i].zhipai_username + '</p>' +
+									'<p class="oa-contact-email mui-h6">截止:' + taskdata[i].visitdate.split(" ")[0] + '</p>' +
+									'<p class="oa-contact-email mui-h6">状态:<span class="state-warrining"> ' + taskdata[i].state + '</span></p>' +
+									'<br/><p class="oa-contact-email mui-h6">客户:' + custName + '</p></div></div></div></div>'
+								table.appendChild(li);
+
+							}
+						} else {
+							var table = document.getElementById("task_ul")
+							if (refresh) {
+								table.innerHTML = "";
+							}
+
+							for (var i = 0; i < taskdata.length; i++) {
+								if (taskdata[i].status == 0) {
+									btnstr = '<a class="mui-btn mui-btn-yellow">接受</a></div>'
+								} else if (taskdata[i].status == 2) {
+									btnstr = '<a class="mui-btn mui-btn-red">提交</a></div>'
+								} else if (taskdata[i].status == 4) {
+									btnstr = '<a class="mui-btn mui-btn-blue">审核</a></div>'
+								} else {
+									btnstr = '<a class="mui-btn mui-btn-red">已结束</a></div>'
+								}
+								var li = document.createElement('li');
+								li.setAttribute('id', taskdata[i].Id);
+								li.className = 'mui-table-view-cell';
+								li.innerHTML = '<div class="mui-slider-right mui-disabled">' + btnstr + '</div>' +
+									'<div class="mui-slider-handle"><div class="mui-slider-cell"><div class="oa-contact-cell mui-table"><div class="oa-contact-avatar mui-table-cell">' +
+									'<img src="images/visitor.png" /></div><div class="oa-contact-content mui-table-cell"><div class="mui-clearfix">' +
+									'<h4 class="oa-contact-name">' + taskdata[i].name + '</h4>' +
+									'<span class="oa-contact-position mui-h6">' + taskdata[i].score + '分</span></div>' +
+									'<p class="oa-contact-email mui-h6">拜访时间:' + taskdata[i].visitdate.split(" ")[0] + '</p>' +
+									'<p class="oa-contact-email mui-h6">状态:<span class="state-warrining"> ' + taskdata[i].state + '</span></p>' +
+									'<p class="oa-contact-email mui-h6">客户:' + taskdata[i].custs[0].CUST_NAME + '</p></div></div></div></div>'
+								table.appendChild(li);
+							}
+						}
+
+					} else {
+						table.innerHTML = "<p class='nocontent'>暂无数据</p>";
+					}
+					if (callback != undefined)
+						callback()
+				});
+			}
+
+			function loadcreat() {
+			}
+			//添加自定义事件监听
+			window.addEventListener('show', function(event) {
+				//获得事件参数
+				//alert("show-task");
+
+			});
+		</script>
+	</body>
+
+</html>

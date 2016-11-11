@@ -1,0 +1,241 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/getdata.js"></script>
+		<div class="mui-content" id="content">
+			<ul class="mui-table-view" style="margin-top: 25px;">
+				<li class="mui-table-view-cell">
+
+					<p class="oa-contact-name mui-h4">
+						客户名称
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="custname">
+						-
+					</p>
+
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						行政区
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="areaname">
+						-
+					</p>
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						客户经理
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="username">
+						-
+					</p>
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						客户级别
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="CustLevel">
+						-
+					</p>
+				</li>
+				<li class="mui-table-view-cell">
+
+					<p class="oa-contact-name mui-h4">
+						地址
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="address_detail">
+						-
+					</p>
+
+				</li>
+				<li class="mui-table-view-cell">
+					<p class="oa-contact-name mui-h4">
+						员工
+					</p>
+
+					<p class="oa-contact-name mui-h5" id="employee_count">
+						-
+					</p>
+				</li>
+			</ul>
+			<div id="ganxirendiv"></div>
+			<div id="chanquandiv"></div>
+			<!--<ul class="mui-table-view" style="margin-top: 25px;">
+
+				<li class="mui-table-view-cell mui-transitioning">
+					<div class="mui-slider-right mui-disabled">
+						<a class="mui-btn mui-btn-grey mui-icon mui-icon-compose" id=""></a>
+						<a class="mui-btn mui-btn-yellow mui-icon mui-icon-phone" id="18108140930"></a>
+					</div>
+					<div class="mui-slider-handle">
+						<div class="mui-table-cell">
+							<p class="oa-contact-name mui-h4">
+								常金玉
+							</p>
+							<p class="oa-contact-name mui-h6">
+								总经理
+							</p>
+							<p class="oa-contact-name mui-h6">
+								<i class="mui-icon mui-icon-phone-filled"></i>26751721
+							</p>
+
+							<p class="oa-contact-name mui-h6">
+								<i class="mui-icon mui-icon-location-filled"></i>资阳市雁江区娇子大道领
+							</p>
+
+						</div>
+					</div>
+				</li>
+
+			</ul>-->
+
+			<!--<ul class="mui-table-view" style="margin-top: 25px;">
+
+				<li class="mui-table-view-cell mui-transitioning">
+					<div class="mui-slider-handle">
+						<div class="mui-table-cell">
+							<p class="oa-contact-name mui-h4">
+								产权
+							</p>
+							<p class="oa-contact-name mui-h6">
+								百年人寿保险有限公司资阳分公司
+							</p>
+							<p class="oa-contact-name mui-h6">
+								上月收人
+							</p>
+
+							<p class="oa-contact-name mui-h6">
+								￥1000
+							</p>
+
+						</div>
+					</div>
+				</li>
+
+			</ul>-->
+
+		</div>
+		<script type="text/javascript">
+			mui.init({
+				preloadPages: [{
+					id: 'custinfo-map.html',
+					url: 'custinfo-map.html'
+				}]
+			})
+			mui.plusReady(function() {
+				var common_header = null;
+				getcustinfo();
+
+			})
+
+			//编辑干系人
+			function editganxiren(e) {
+				//获取id
+				var id = e.id
+				plus.storage.setItem("ganxirenid", id);
+				var pageview = plus.webview.create('common-header.html', 'common-header.html', {})
+				pageview.addEventListener('loaded', function() {
+					pageview.show('slide-in-right', 1, function() {
+						
+						mui.fire(pageview, 'opensub', {
+							id: null,
+							subpage: "custinfo-contact-add.html",
+							bartab: {},
+							header: {
+								title: "编辑干系人",
+								right: {
+									icon: "mui-btn mui-btn-blue mui-btn-link",
+									text: "提交",
+								}
+							}
+						});
+					});
+				})
+
+			}
+
+			//拨打电话
+			function call(e) {
+				var phone = e.id;
+
+				plus.nativeUI.confirm("你确定要呼叫“" + phone + "”吗？", function(e) {
+					if (e.index == 0) {
+						plus.device.dial(phone, false);
+					}
+
+				}, "呼出电话", ["拨打", "取消"]);
+			}
+
+			function getcustinfo() {
+				var custid = plus.storage.getItem("custid");
+				zydx.custinfo(custid, function(data) {
+					//将地址信息存入缓存
+					var loc = {
+						address: data.address_detail,
+						lng: data.lng,
+						lat: data.lat
+					}
+					plus.storage.setItem("custloc", JSON.stringify(loc))
+						//
+					document.getElementById("custname").innerText = data.custname
+					document.getElementById("areaname").innerText = data.areaname
+					document.getElementById("username").innerText = data.username
+					document.getElementById("employee_count").innerText = data.employee_count
+					document.getElementById("address_detail").innerText = data.address_detail
+					document.getElementById("CustLevel").innerText = data.CustLevel
+					if (data.cust_ganxirens != null && data.cust_ganxirens.length > 0) {
+						var html = "";
+						var ganxirendiv = document.getElementById("ganxirendiv");
+						ganxirendiv.innerHTML = ""
+						plus.storage.setItem("ganxiren", JSON.stringify(data.cust_ganxirens))
+						for (var i = 0; i < data.cust_ganxirens.length; i++) {
+							var tmphtml = '<li class="mui-table-view-cell mui-transitioning"><div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-grey mui-icon mui-icon-compose" id="' +
+								data.cust_ganxirens[i].Id + '" onclick="editganxiren(this)"></a><a onclick="call(this)" class="mui-btn mui-btn-yellow mui-icon mui-icon-phone" id="' +
+								data.cust_ganxirens[i].tel + '"></a></div><div class="mui-slider-handle"><div class="mui-table-cell"><p class="oa-contact-name mui-h4">' +
+								data.cust_ganxirens[i].name + '</p><p class="oa-contact-name mui-h6">' +
+								data.cust_ganxirens[i].job + '</p><p class="oa-contact-name mui-h6"><i class="mui-icon mui-icon-phone-filled"></i>' +
+								data.cust_ganxirens[i].tel + '</p><br/><p class="oa-contact-name mui-h6"><i class="mui-icon mui-icon-location-filled"></i>' +
+								data.cust_ganxirens[i].workplace + '</p></div></div></li>';
+							html += tmphtml
+						}
+						html = '<ul class="mui-table-view" style="margin-top: 25px;">' + html + '</ul>'
+						ganxirendiv.innerHTML = html;
+					}
+
+					if (data.properties != null && data.properties.length > 0) {
+						var html = "";
+						var chanquandiv = document.getElementById("chanquandiv");
+						chanquandiv.innerHTML = "";
+						for (var i = 0; i < data.properties.length; i++) {
+							var tmphtml = '<li class="mui-table-view-cell mui-transitioning"><div class="mui-slider-handle"><div class="mui-table-cell"><p class="oa-contact-name mui-h4">产权</p><p class="oa-contact-name mui-h6">' +
+								data.properties[i].property_name + '</p><br/><p class="oa-contact-name mui-h6">上月收人</p><p class="oa-contact-name mui-h6">￥' +
+								data.properties[i].LastMonthservcharge + '</p></div></div></li>';
+							html += tmphtml
+						}
+						html = '<ul class="mui-table-view" style="margin-top: 25px;margin-bottom:10px">' + html + '</ul>'
+						chanquandiv.innerHTML = html;
+
+					}
+				})
+
+			}
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+
+	<body>
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+			var contentWebview = null,
+				self = null;
+			mui.plusReady(function() {
+				self = plus.webview.currentWebview();
+				//console.log("plusReady")
+				
+			});
+			//添加自定义事件监听
+			window.addEventListener('opensub', function(event) {
+				//获得事件参数
+
+				//先清除右边的按钮
+				var rightBT=document.getElementById("rightBT");
+				console.log("sss:"+JSON.stringify(document.getElementById("rightBT")));
+				if(rightBT!=null)
+				{
+					rightBT.remove()
+				}
+				//显示标题
+				var titleElem = document.getElementById("title")
+				titleElem.innerHTML = event.detail.header.title;
+				
+				//加载下部导航
+				var bottom="0px";
+				if(event.detail.bartab!=null && event.detail.bartab.length>0)
+				{
+					bottom="51px";
+					document.getElementById("nav").style.display="block"
+				}
+				//加载子页面
+				//console.log("sub:"+JSON.stringify(self.children().length));
+//				if(!self.children())
+//				{
+//					 contentWebview= self.children()[0];
+//				}
+				
+				
+				if(!contentWebview)
+				{
+					contentWebview=plus.webview.create(event.detail.subpage,event.detail.subpage,{top:"45px",bottom:bottom});
+					plus.webview.currentWebview().append(contentWebview)
+				}
+				if (contentWebview.getURL() != event.detail.subpage) {
+					contentWebview.loadURL(event.detail.subpage);
+				} else {
+					contentWebview.show();
+				}
+					//根据id向服务器请求新闻详情
+				
+				//加载右边的按钮
+				if(event.detail.header.right!=null)
+				{
+					rightBT=document.getElementById("rightBT");
+					if(rightBT==null)
+					{
+						rightBT = document.createElement('button');
+						rightBT.className = 'mui-btn mui-btn-blue mui-btn-link mui-pull-right';
+						rightBT.innerHTML = '提交';
+						rightBT.id="rightBT";
+						//rightBT.onclick = contentWebview.evalJS("save()")
+						rightBT.onclick =function(){
+							console.log("2")
+							contentWebview.evalJS("save()")
+						}
+						document.getElementById("hearder").appendChild(rightBT);
+					}
+					//document.getElementById("hearder").removeChild(document.getElementById("rightBT"))
+					   
+				}
+			});
+		</script>
+		<header class="mui-bar mui-bar-nav" id="hearder">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			
+			<h1 id="title" class="mui-title"></h1>
+		</header>
+		<!--<nav class="mui-bar mui-bar-tab" id="nav" >
+			<a class="mui-tab-item" href="tab-webview-subpage-task.html">
+				<span class="mui-icon mui-icon-flag"></span>
+				<span class="mui-tab-label">收入</span>
+			</a>
+
+		</nav>-->
+	</body>
+
+</html>

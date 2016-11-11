@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+	</head>
+
+	<body>
+
+		<div class="mui-content" style="background-color:#fff">
+			<div id="scroll" class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view  mui-table-view-striped  mui-table-view-condensed">
+
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/qin_01.png" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<span class="mui-badge">KAWAI  K-700  立式钢琴</span>
+											<!--<span class="mui-badge-red xuexi-warining">未读</span>-->
+										</div>
+
+										<p class="mui-ellipsis">
+											概述：琴键数：88鍵(7 1/4八度高音)踏板：3个 (中间踏板 弱音功能)
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</li>
+						
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/qin_02.jpg" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<span class="mui-badge">TOYAMA  TG-149  三角钢琴</span>
+											<!--<span class="mui-badge-red xuexi-warining">未读</span>-->
+										</div>
+
+										<p class="mui-ellipsis">
+											概述：TG –series Piano 精湛技术  完美音质   源源不断的技术进步加上精益求精的技艺，才能够打造出精美绝伦的
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</li>
+						
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/qin_03.jpg" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<span class="mui-badge">TOYAMA  TD-9S DVS  民谣吉他</span>
+											<!--<span class="mui-badge-red xuexi-warining">未读</span>-->
+										</div>
+
+										<p class="mui-ellipsis">
+											概述：TD-9S DVS   41” Dreadnought 1   /  41寸民谣
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</li>
+						
+						
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/qin_04.jpg" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<span class="mui-badge">凤灵  MV013B-C  小提琴</span>
+											<!--<span class="mui-badge-red xuexi-warining">未读</span>-->
+										</div>
+
+										<p class="mui-ellipsis">
+											概述：白松（云杉）面板，吊木筋 色木
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/qin_05.gif" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<span class="mui-badge">凤灵  MC005  大提琴</span>
+											<!--<span class="mui-badge-red xuexi-warining">未读</span>-->
+										</div>
+
+										<p class="mui-ellipsis">
+											概述：花纹大提琴  白松（云杉）面板  花纹枫木背、侧板  乌木配件  
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="mui-table-view-cell">
+							<div class="mui-slider-cell">
+								<div class="oa-contact-cell mui-table">
+									<div class="oa-contact-avatar mui-table-cell">
+										<img src="images/qin_06.jpg" />
+									</div>
+									<div class="oa-contact-content mui-table-cell">
+										<div class="mui-clearfix">
+											<span class="mui-badge">韵  05系列  二胡</span>
+											<!--<span class="mui-badge-red xuexi-warining">未读</span>-->
+										</div>
+
+										<p class="mui-ellipsis">
+											概述：酸枝木二胡   05A 木轸 / 05B 铜轸 / 05C木轸前方后圆   
+										</p>
+
+									</div>
+								</div>
+							</div>
+						</li>
+
+					
+					
+					</ul>
+				</div>
+			</div>
+
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script>
+			mui.init({
+				swipeBack: true, //启用右滑关闭功能
+				pullRefresh: {
+					container: "#scroll", //下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+					down: {
+						height: 50, //可选,默认50.触发下拉刷新拖动距离,
+						auto: true, //可选,默认false.自动下拉刷新一次
+						contentdown: "下拉可以刷新", //可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+						contentover: "释放立即刷新", //可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+						contentrefresh: "正在刷新...", //可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+						callback: pulldownRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+
+					}
+					//					up: {
+					//						height: 50, //可选.默认50.触发上拉加载拖动距离
+					//						auto: true, //可选,默认false.自动上拉加载一次
+					//						contentrefresh: "正在加载...", //可选，正在加载状态时，上拉加载控件上显示的标题内容
+					//						contentnomore: '没有更多数据了', //可选，请求完毕若没有更多数据时显示的提醒内容；
+					//						callback: pullupRefresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+					//					}
+				}
+
+			});
+
+			function pulldownRefresh() {
+				console.log("pullupRefresh")
+				mui('#scroll').pullRefresh().endPulldownToRefresh(); //refresh completed
+			}
+		</script>
+	</body>
+
+</html>
